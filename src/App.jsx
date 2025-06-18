@@ -1,10 +1,6 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Body from "./components/Body";
-import Contact from "./components/Contact";
-import About from "./components/About";
-import NotFound from "./components/NotFound";
-import Layout from "./components/LAYOUT.JSX";
+import {Layout, Body, Contact, About, NotFound} from "./components/index";
 
 const appRouter = createBrowserRouter([
   {
