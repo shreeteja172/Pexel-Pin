@@ -1,82 +1,51 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Header, Footer, SearchBar, PhotoGrid } from "./components/index";
 
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [photos, setPhotos] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
-  const [selectedBtn, setSelectedBtn] = useState("all");
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
-  const fetchPhotos = async (query) => {
+  const perPage = 60; 
+
+  const fetchPhotos = async (query, pageNum = 1, append = false) => {
     const apiKey = import.meta.env.VITE_PEXELS_API_KEY;
-    const url = "https://api.pexels.com/v1/search?query=";
+    const url = `https://api.pexels.com/v1/search?query=${query}&page=${pageNum}&per_page=${perPage}`;
 
     setLoading(true);
     try {
-      const response = await fetch(`${url}${query}`, {
+      const response = await fetch(url, {
         headers: { Authorization: apiKey },
       });
       if (!response.ok) throw new Error(`Error: ${response.status}`);
       const data = await response.json();
       console.log("Fetched photos:", data);
-      setPhotos(data.photos || []);
-      setFilteredData(data.photos || []); 
+
+      const newPhotos = data.photos || [];
+      setPhotos((prev) => (append ? [...prev, ...newPhotos] : newPhotos));
+      setHasMore(data.total_results > pageNum * perPage);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching photos:", error);
       setPhotos([]);
-      setFilteredData([]);
+      setHasMore(false);
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchPhotos("nature"); 
-  }, []);
-
-  const filterPics = (type) => {
-    if (type === "all") {
-      return photos;
-    }
-    return photos.filter((photo) => {
-      if (!photo.avg_color) return false; 
-      if (type === "trending") {
-        return true;
-      } else if (type === "vibrant") {
-        return photo.avg_color && !["#000000", "#FFFFFF"].includes(photo.avg_color);
-      } else if (type === "monochrome") {
-        const hex = photo.avg_color.slice(1);
-        const r = parseInt(hex.slice(0, 2), 16);
-        const g = parseInt(hex.slice(2, 4), 16);
-        const b = parseInt(hex.slice(4, 6), 16);
-        return Math.abs(r - g) < 20 && Math.abs(g - b) < 20 && Math.abs(r - b) < 20;
-      } else if (type === "pastel") {
-        return photo.avg_color && parseInt(photo.avg_color.slice(1), 16) > 0xaaaaaa;
-      } else if (type === "dark") {
-        return photo.avg_color && parseInt(photo.avg_color.slice(1), 16) < 0x888888;
-      }
-      return true;
-    });
-  };
-
-  const handleFilterClick = (type) => {
-    setSelectedBtn(type);
-    const filtered = filterPics(type);
-    setFilteredData(filtered);
-  };
-
-  const filterBtns = [
-    { name: "All", type: "all" },
-    { name: "Trending", type: "trending" },
-    { name: "Vibrant", type: "vibrant" },
-    { name: "Monochrome", type: "monochrome" },
-    { name: "Pastel", type: "pastel" },
-    { name: "Dark", type: "dark" },
-  ];
-
   const handleSearch = () => {
-    if (searchQuery) fetchPhotos(searchQuery);
+    if (searchQuery.trim()) {
+      setPage(1);
+      fetchPhotos(searchQuery.trim(), 1);
+    }
+  };
+
+  const handleLoadMore = () => {
+    const nextPage = page + 1;
+    setPage(nextPage);
+    fetchPhotos(searchQuery.trim(), nextPage, true);
   };
 
   const handleInputChange = (e) => {
@@ -93,34 +62,29 @@ function App() {
           onChange={handleInputChange}
           onClick={handleSearch}
         />
-        {/* Filter Buttons Section */}
-        <div className="w-full max-w-6xl mt-4 mb-6 flex flex-wrap justify-center gap-2">
-          {filterBtns.map((btn) => (
-            <button
-              key={btn.type}
-              onClick={() => handleFilterClick(btn.type)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                selectedBtn === btn.type
-                  ? "bg-blue-600 text-white"
-                  : "bg-white text-gray-600 hover:bg-gray-100"
-              } border border-gray-200`}
-            >
-              {btn.name}
-            </button>
-          ))}
-        </div>
-        {/* Photo Grid */}
         <div className="w-full max-w-6xl mt-8">
-          {loading ? (
+          {loading && photos.length === 0 ? (
             <p className="text-center text-gray-600">Loading...</p>
+          ) : photos.length === 0 ? (
+            <p className="text-center text-gray-600">Search for photos to get started!</p>
           ) : (
-            <PhotoGrid photos={filteredData} />
+            <PhotoGrid photos={photos} />
           )}
         </div>
+        {hasMore && !loading && photos.length > 0 && (
+          <button
+            onClick={handleLoadMore}
+            className="mt-6 px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors"
+          >
+            Load More
+          </button>
+        )}
+        {loading && photos.length > 0 && (
+          <p className="text-center text-gray-600 mt-4">Loading more photos...</p>
+        )}
       </main>
       <Footer />
     </div>
   );
 }
-
 export default App;
