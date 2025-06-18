@@ -1,5 +1,5 @@
-import Header from './Header/Header';
-import Footer from './Footer/Footer';
+import Header from './Footer/Header';
+import Footer from './Footer';
 import SearchBar from './SearchBar';
 import PhotoGrid from './PhotoGrid';
 

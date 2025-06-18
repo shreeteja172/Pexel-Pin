@@ -10,4 +10,4 @@ function PhotoGrid({ photos }) {
   )
 }
 
-export default PhotoGrid
+export default PhotoGrid  
