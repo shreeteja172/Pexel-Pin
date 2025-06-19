@@ -35,7 +35,6 @@ const Body = () => {
       setLoading(false);
     }
   };
-
   const handleSearch = () => {
     if (searchQuery.trim()) {
       setPage(1);
@@ -44,7 +43,6 @@ const Body = () => {
   };
 
   const handleLoadMore = () => {
-    
     const nextPage = page + 1;
     setPage(nextPage);
     fetchPhotos(searchQuery.trim(), nextPage, true);
@@ -73,7 +71,7 @@ const Body = () => {
             <p className="text-center text-gray-600 text-lg">Loading...</p>
           ) : photos.length === 0 ? (
             <p className="text-center text-gray-500 text-lg">
-              Search for photos to get started!
+              No photos found. Try a different search term.
             </p>
           ) : (
             <PhotoGrid photos={photos} />
