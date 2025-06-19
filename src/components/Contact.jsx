@@ -22,17 +22,19 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex flex-col relative overflow-hidden bg-gradient-to-br from-gray-900 via-blue-950 to-black">
       <div className="max-w-4xl mx-auto">
         <div className="text-center">
-          <h1 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">Contact Us</h1>
-          <p className="mt-4 text-lg text-gray-600">
+          <h1 className="text-3xl font-extrabold text-white sm:text-4xl pt-10">Contact Us</h1>
+          <p className="mt-4 text-lg text-gray-300">
             We'd love to hear from you! Send us a message using the form below. Regarding the site etc.
           </p>
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2">
-          <div className="bg-white shadow-md rounded-lg p-6">
+          <div
+            className="bg-white shadow-md rounded-lg p-6"
+          >
             <h2 className="text-xl font-semibold text-gray-800 mb-4">Send us a message</h2>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
@@ -86,24 +88,30 @@ const Contact = () => {
             </form>
           </div>
 
-          <div className="bg-white shadow-md rounded-lg p-6">
+          <div
+            className="bg-white shadow-md rounded-lg p-6"
+          >
             <h2 className="text-xl font-semibold text-gray-800 mb-4">Contact Information</h2>
             <div className="space-y-4">
               <div>
-                <h3 className="text-gray-600 font-medium">Address</h3>
-                <p className="text-gray-800">https://localhost:3000 (Heheh)</p>
+                <h3 className="text-gray-600 font-medium">Project Name</h3>
+                <p className="text-gray-800">Pexel-Pin</p>
               </div>
               <div>
                 <h3 className="text-gray-600 font-medium">Github Username</h3>
                 <p className="text-gray-800">shreeteja172</p>
               </div>
               <div>
-                <h3 className="text-gray-600 font-medium">Phone</h3>
-                <p className="text-gray-800">+1 (555) 123-4567</p>
+                <h3 className="text-gray-600 font-medium">LinkedIn Username</h3>
+                <p className="text-gray-800">shreeteja172</p>
               </div>
               <div>
-                <h3 className="text-gray-600 font-medium">Time</h3>
-                <p className="text-gray-800">Everyday</p>
+                <h3 className="text-gray-600 font-medium">X Username</h3>
+                <p className="text-gray-800">StriveWithShree</p>
+              </div>
+              <div>
+                <h3 className="text-gray-600 font-medium">Address</h3>
+                <p className="text-gray-800">https://localhost:3000 (Heheh)</p>
               </div>
             </div>
           </div>

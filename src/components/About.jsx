@@ -4,8 +4,8 @@ import { MdEmail } from 'react-icons/md'
 
 const About = () => {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-8">About Me</h1>
+    <div className="min-h-screen flex flex-col relative overflow-hidden bg-gradient-to-br from-gray-900 via-blue-950 to-black">
+      <h1 className="text-3xl font-bold text-center mb-8 text-white pt-10">About Me</h1>
       
       <div className="bg-white rounded-lg shadow-md p-6 max-w-2xl mx-auto">
         <div className="flex flex-col md:flex-row items-center mb-6">

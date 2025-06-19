@@ -2,9 +2,14 @@ import PhotoCard from './PhotoCard'
 
 function PhotoGrid({ photos }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 md:gap-14 px-2 md:px-8 py-8">
+    <div
+      className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-6 w-full max-w-[1800px] mx-auto"
+      style={{ minHeight: '60vh' }}
+    >
       {photos.map((photo) => (
-        <PhotoCard key={photo.id} photo={photo} />
+        <div key={photo.id} className="mb-6 break-inside-avoid">
+          <PhotoCard photo={photo} />
+        </div>
       ))}
     </div>
   )

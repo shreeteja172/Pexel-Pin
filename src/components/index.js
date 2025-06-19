@@ -7,6 +7,7 @@ import Layout from './Layout';
 import Contact from './Contact';
 import NotFound from './NotFound';
 import Body from './Body';
+import PhotoCard from './PhotoCard';
 
 
 export { Header, Footer, SearchBar, PhotoGrid, About , Contact, NotFound , Body, Layout };
