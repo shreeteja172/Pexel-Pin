@@ -3,7 +3,7 @@ import PhotoCard from './PhotoCard'
 function PhotoGrid({ photos }) {
   return (
     <div
-      className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-6 w-full max-w-[1800px] mx-auto"
+      className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-4 gap-6 w-full max-w-[1800px] mx-auto"
       style={{ minHeight: '60vh' }}
     >
       {photos.map((photo) => (
