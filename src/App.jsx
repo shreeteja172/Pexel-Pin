@@ -1,7 +1,7 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import {Layout, Body, Contact, About, NotFound} from "./components/index";
-
+import { Layout, Body, Contact, About, NotFound } from "./components/index";
+import { Analytics } from "@vercel/analytics/react";
 const appRouter = createBrowserRouter([
   {
     path: "/",
@@ -28,7 +28,12 @@ const appRouter = createBrowserRouter([
 ]);
 
 const App = () => {
-  return <RouterProvider router={appRouter} />;
+  return (
+    <>
+      <RouterProvider router={appRouter} />
+      <Analytics />
+    </>
+  );
 };
 
 export default App;
